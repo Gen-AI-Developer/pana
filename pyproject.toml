@@ -7,7 +7,9 @@ authors = [
     { name = "Syed Safdar Ali Shah", email = "programmersafdar@live.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "crewai>=0.102.0",
+]
 
 [project.scripts]
 pana = "pana:main"
