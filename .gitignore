@@ -1,1 +1,14 @@
+# Git command to remove sensitive files from history:
+# git filter-branch --force --index-filter \
+#   "git rm --cached --ignore-unmatch .env" \
+#   --prune-empty --tag-name-filter cat -- --all
+#
+# --force: Override safety checks
+# --index-filter: Modify staging area for each commit
+# git rm --cached: Remove from Git but keep local file
+# --ignore-unmatch: Don't fail if file is missing
+# --prune-empty: Remove empty commits
+# --tag-name-filter cat: Preserve tags
+# -- --all: Apply to all branches
+
 .env
