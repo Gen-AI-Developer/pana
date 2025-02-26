@@ -1,0 +1,8 @@
+generate_topic:
+  description: >
+    Conduct a thorough research and Generating a Single Topic by Uncover 
+    cutting-edge developments in the world of AI Make sure you find 
+    any interesting and relevant information given the current year is 2025.
+  expected_output: >
+    A Single Most Trending Topic related to AI/ML/Data Science/Computer Science/Mathemathics.
+  agent: topic_generator
