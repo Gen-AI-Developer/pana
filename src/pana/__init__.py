@@ -1,36 +1,37 @@
-from crewai.flow.flow import Flow, start, listen
-from dotenv import load_dotenv, find_dotenv
+from crewai.flow.flow import Flow,start,listen
+from dotenv import load_dotenv,find_dotenv
 from litellm import completion
-
-load_dotenv(find_dotenv())
+_: bool = load_dotenv(find_dotenv())
 
 class PanaFlow(Flow):
-    
+
     @start()
-    def generate_topic(self):
-        print("Generating topic")
-        try:
-            response = completion(
-                model="gemini/gemini-1.5-flash",
-                max_tokens=100,
-                temperature=0.5,
-                messages=[
-                    {
-                        'role': 'user',  # changed from 'user' to 'role': 'user'
-                        'content': 'generate a most sharing/learning topic name in Agentic AI'
-                    }
-                ]
+    def generate_topic(self) -> str:
+        response = completion(
+            model="gemini/gemini-1.5-flash",
+            messages=[
+                {"role": "user", "content": "share most trending in AI world  just give me a single topic title."}
+            ],
+            temperature=0.7,
+            max_tokens=100,
             )
-            topic = response.choices[0].message['content']
-            self.state['topic'] = topic  # Store topic in state
-            return topic
-        except Exception as e:
-            print(f"Error generating topic: {str(e)}")
-            return None
-
+        self.state['topic'] = response.choices[0].message.content
+        print(f"Selected Topic for Blog Post is :-> {self.state['topic']}")
+        return self.state['topic']
+    
+    @listen(generate_topic)
+    def generate_outline(self) -> str:
+        response = completion(
+            model="gemini/gemini-1.5-flash",
+            messages=[
+                {"role": "user", "content": "Generate a structure outline for a blog post on the topic: "+ self.state['topic']}
+            ],
+            temperature=0.3,
+            )
+        self.state['outline'] = response.choices[0].message.content
+        return self.state['outline']
+    
 def main():
-    pana_flow = PanaFlow()
-    pana_flow.kickoff()
-
-if __name__ == '__main__':
-    main()
+    flow = PanaFlow()
+    print(flow.kickoff())
+    print("Flow Ended")
