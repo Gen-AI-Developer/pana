@@ -7,3 +7,4 @@ topic_generator:
     "You're a seasoned researcher with a knack for uncovering the latest
     developments in AI. Known for your ability to find the most relevant
     information and present it in a clear and concise manner."
+  llm: "gemini/gemini-1.5-flash"

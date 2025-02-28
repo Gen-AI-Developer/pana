@@ -1,15 +1,20 @@
 from crewai.flow.flow import Flow,start,listen
 from dotenv import load_dotenv,find_dotenv
-from litellm import completion
+# from litellm import completion
 from pana.crews.blog_crew.BlogCrew import BlogCrew
 _: bool = load_dotenv(find_dotenv())
 
 
 class PanaFlow(Flow):
+    
 
     @start()
     def generate_topic(self) -> str:
-        response = BlogCrew().crew().kickoff()
+        response = BlogCrew().crew().kickoff(
+            inputs={
+                "input": "Top 25 New Technology Trends in 2025"
+            }
+        )
         self.state['topic'] = response.raw
         return self.state['topic']
     
