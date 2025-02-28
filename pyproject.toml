@@ -14,6 +14,7 @@ dependencies = [
 
 [project.scripts]
 pana = "pana:main"
+chatbot ="pana.ChatBot:main"
 
 [build-system]
 requires = ["hatchling"]
